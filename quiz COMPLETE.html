@@ -1,0 +1,105 @@
+<head> 
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>QUIZ!!!!!</title>
+   <link rel="icon" type="image/x-icon" href="">
+   <style>
+      #form{color:black;}
+      fieldset{border:1px solid pink;color:maroon;}
+      button{background-color:pink;border:1px solid maroon;border-radius:5px;color:maroon;}
+      .resultBox{display:none;border:1px solid black;padding:10px;}
+   </style>
+   <script>
+      const resultPoints = {//array of all possible results
+         //add to this if you want more results! you can also subtract if you want only two results for example.
+         kindPoints:0,
+         coolPoints:0,
+         meanPoints:0
+      }
+      var questionNumber = 1;//variable to tell which question are you currently looking at
+      function count(z){//add point to a result based on answer to a question
+         //this correlates to in the html where it says onclick="count(some word)", that just tells it which value to add points to for the given answer.
+         if (z == "kind") {
+            resultPoints["kindPoints"]++;
+         }
+         else if (z == "cool") { //(just make more of these 'else if's' if you add more possible results)
+         resultPoints["coolPoints"]++;
+         }
+         else if (z == "mean") {
+         resultPoints["meanPoints"]++;
+         }
+         else { //error message in case the z variable is spelled wrong it the html or something
+            console.log("count variable is not defined")
+         }
+      }
+      function calculateResults(x) {//this just calculates the results automatically and shows a message correlating to the final result.
+         const maxPoints = Math.max(...Object.values(resultPoints));
+         for (const key of Object.keys(resultPoints)){
+            if (resultPoints[key] == maxPoints) {
+               show(`${key}`);
+               break;
+            }
+         }
+      }
+      function showNextQuestion() {//hides the question you just answered and shows the next one. if you answered the last question it will instead calculate results.
+         var howManyQs = document.getElementsByTagName("fieldset").length;
+         if (questionNumber < howManyQs) {//it will automatically check how many questions (fieldsets) are in your html document so to show results at the right time. this means you can add as many questions as you want and dont have to worry about it!
+            let thisQuestion = "Q" + questionNumber;
+            hide(thisQuestion);
+            questionNumber++;
+            let nextQuestion = "Q" + questionNumber;
+            show(nextQuestion);
+         }
+         else {
+            let thisQuestion = "Q" + questionNumber;
+            hide(thisQuestion);
+            calculateResults();
+         }
+      }
+      function show(y) {//shows whatever element it is given
+         var x = document.getElementById(y);
+            x.style.display = "block";
+      }
+      function hide(y) {//hides whatever element it is given
+         var x =document.getElementById(y);
+            x.style.display = "none";
+      }
+   </script>
+   <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body>
+   <div id="form">
+      <h1>Example quiz: pick an animals!</h1>
+      <fieldset id="Q1" style="display:block;">
+         <legend>pick a cat</legend>
+         <button  onclick="showNextQuestion(), count('kind')">Whimsy</button>
+         <button  onclick="showNextQuestion(), count('mean')">Kenneth</button>
+         <button  onclick="showNextQuestion(), count('kind')">Jellybean</button>
+         <button  onclick="showNextQuestion(), count('cool')">Jackpot</button>
+      </fieldset>
+      <fieldset id="Q2" style="display:none;">
+         <legend>pick a animal</legend>
+         <button  onclick="showNextQuestion(), count('cool')">Kiri</button>
+         <button  onclick="showNextQuestion(), count('cool')">Skittles</button>
+         <button  onclick="showNextQuestion(), count('mean')">Lulu</button>
+         <button  onclick="showNextQuestion(), count('kind')">Cass</button>
+      </fieldset>
+      <fieldset id="Q3" style="display:none;">
+         <legend>pick another cat</legend>
+         <button  onclick="showNextQuestion(), count('kind')">Mo</button>
+         <button  onclick="showNextQuestion(), count('cool')">Roni</button>
+         <button  onclick="showNextQuestion(), count('mean')">Jax</button>
+         <button  onclick="showNextQuestion(), count('kind')">Mochi</button>
+      </fieldset>
+   </div><!--form-->
+   <div class="resultBox" id="coolPoints">
+      you are cool :)
+   </div>
+   <div class="resultBox" id="kindPoints">
+      you are kind :)
+   </div>
+   <div class="resultBox" id="meanPoints">
+      you are mean :)
+   </div>
+</body>
