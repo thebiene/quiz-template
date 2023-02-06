@@ -11,26 +11,15 @@
    </style>
    <script>
       const resultPoints = {//array of all possible results
-         //add to this if you want more results! you can also subtract if you want only two results for example.
-         kindPoints:0,
-         coolPoints:0,
-         meanPoints:0
+         //the name of each array item should be the same as the count() variable in the html, and the id of the result box.
+         kind:0,
+         cool:0,
+         mean:0
       }
       var questionNumber = 1;//variable to tell which question are you currently looking at
       function count(z){//add point to a result based on answer to a question
          //this correlates to in the html where it says onclick="count(some word)", that just tells it which value to add points to for the given answer.
-         if (z == "kind") {
-            resultPoints["kindPoints"]++;
-         }
-         else if (z == "cool") { //(just make more of these 'else if's' if you add more possible results)
-         resultPoints["coolPoints"]++;
-         }
-         else if (z == "mean") {
-         resultPoints["meanPoints"]++;
-         }
-         else { //error message in case the z variable is spelled wrong it the html or something
-            console.log("count variable is not defined")
-         }
+         resultPoints[`${z}`]++;
       }
       function calculateResults(x) {//this just calculates the results automatically and shows a message correlating to the final result.
          const maxPoints = Math.max(...Object.values(resultPoints));
@@ -93,13 +82,13 @@
          <button  onclick="showNextQuestion(), count('kind')">Mochi</button>
       </fieldset>
    </div><!--form-->
-   <div class="resultBox" id="coolPoints">
+   <div class="resultBox" id="cool">
       you are cool :)
    </div>
-   <div class="resultBox" id="kindPoints">
+   <div class="resultBox" id="kind">
       you are kind :)
    </div>
-   <div class="resultBox" id="meanPoints">
+   <div class="resultBox" id="mean">
       you are mean :)
    </div>
 </body>
